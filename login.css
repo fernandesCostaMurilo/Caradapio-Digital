@@ -1,0 +1,64 @@
+/* Centraliza a div e o conteúdo na tela inteira */
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente na tela */
+    align-items: center;     /* Centraliza verticalmente na tela */
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    
+}
+
+/* Alinha os itens do formulário em coluna e no centro */
+form {
+    display: flex;
+    flex-direction: column;  /* Organiza os elementos em fila vertical */
+    align-items: center;     /* Alinha os elementos no centro horizontal da coluna */
+    gap: 10px;               /* Cria um espaço uniforme entre os campos */
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajuste do tamanho e preenchimento dos inputs */
+input {
+    padding: 8px;
+    width: 200px;
+    text-align: center;      /* Centraliza o texto digitado dentro do input */
+}
+.grid-CONTAINER{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+.grid-CONTAINER{
+    display: grid;
+    grid-template-columns: 1fr 3rf;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 
+    "header header"
+    "menu main"
+    "footer footer";
+    gap: 10px;
+}
+.header {grid-area: header;}
+.menu {grid-area: menu;}
+.grid-CONTAINER{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+
+}
+@media (max-width:768px){
+    .grid-CONTAINER{
+        grid-template-columns:repeat(2, 1fr);
+    }
+
+}
+@media (max-width:480px){
+    .grid-CONTAINER{
+        grid-template-columns:1fr;
+    }
+}
