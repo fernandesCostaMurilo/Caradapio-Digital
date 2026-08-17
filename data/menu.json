@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "dia": "Segunda",
+    "titulo": "Lixo",
+    "descricao": "Arroz com goiabada",
+    "calorias": "Muitas",
+    "proteinas": "Nenhuma",
+    "carboidratos": "Um pouco",
+    "alerta": "Tu vai morrer"
+  },
+  {
+    "id": 2,
+    "dia": "Terça",
+    "titulo": "Lagostas",
+    "descricao": "Filé de Lagostas grelhado com ervas finas, purê de batata doce cremoso, feijão preto e salada fresca.",
+    "calorias": "450 kcal",
+    "proteinas": "35g",
+    "carboidratos": "48g",
+    "alerta": "Livre de glúten e castanhas. O purê contém derivados de leite."
+  },
+  {
+    "id": 3,
+    "dia": "Quarta",
+    "titulo": "Macarronada Integral",
+    "descricao": "Espaguete integral ao molho bolonhesa caseiro com queijo branco ralado e abobrinha refogada.",
+    "calorias": "510 kcal",
+    "proteinas": "28g",
+    "carboidratos": "62g",
+    "alerta": "Contém glúten e derivados de leite."
+  },
+  {
+    "id": 4,
+    "dia": "Quinta",
+    "titulo": "Peixe Assado com Ervas",
+    "descricao": "Filé de tilápia assado, arroz com brócolis, lentilha temperada e salada.",
+    "calorias": "420 kcal",
+    "proteinas": "30g",
+    "carboidratos": "44g",
+    "alerta": "Contém peixe. Livre de glúten, ovos e derivados de leite."
+  },
+  {
+    "id": 5,
+    "dia": "Sexta",
+    "titulo": "Strogonoff Light de Frango",
+    "descricao": "Strogonoff de frango com creme de leite leve, arroz branco, feijão carioca e batata doce assada.",
+    "calorias": "530 kcal",
+    "proteinas": "33g",
+    "carboidratos": "58g",
+    "alerta": "Contém derivados de leite."
+  }
+]
