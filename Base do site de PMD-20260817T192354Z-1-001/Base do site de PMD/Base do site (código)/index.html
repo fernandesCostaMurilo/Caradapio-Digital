@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Escolar Nutritivo</title>
+    <!-- Vinculação do arquivo CSS externo -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- CONTAINER DA BARRA LATERAL (MENU & LOGIN) -->
+    <aside class="barra-lateral">
+        <div class="logo-sidebar">Menu Escolar</div>
+        <nav class="links-sidebar">
+            <a href="#ajuda" class="item-sidebar">❓ Dúvidas Frequentes</a>
+            <a href="#contato" class="item-sidebar">💬 Fale Conosco</a>
+            <a href="#nutricionista" class="item-sidebar">🍎 Falar com Nutricionista</a>
+        </nav>
+        <div class="rodape-sidebar">
+            <a href="#login" class="botao-login">👤 Entrar / Login</a>
+        </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL DO SITE -->
+    <main class="conteudo-principal">
+        <header>
+            <h1>Cardápio Escolar Nutritivo</h1>
+            <p>Alimentação balanceada, segura e energia para o seu dia de estudos!</p>
+        </header>
+
+        <!-- Gatilhos de Seleção Semanal (Inputs Radio) -->
+        <input type="radio" id="tab-seg" name="semana-control" checked>
+        <input type="radio" id="tab-ter" name="semana-control">
+        <input type="radio" id="tab-qua" name="semana-control">
+        <input type="radio" id="tab-qui" name="semana-control">
+        <input type="radio" id="tab-sex" name="semana-control">
+
+        <!-- Barra de Navegação dos Dias -->
+        <nav class="abas-semana">
+            <label for="tab-seg" class="aba-dia">Segunda</label>
+            <label for="tab-ter" class="aba-dia">Terça</label>
+            <label for="tab-qua" class="aba-dia">Quarta</label>
+            <label for="tab-qui" class="aba-dia">Quinta</label>
+            <label for="tab-sex" class="aba-dia">Sexta</label>
+        </nav>
+
+        <!-- CONTEÚDO: SEGUNDA-FEIRA -->
+        <div class="painel-cardapio" id="menu-segenda">
+            <div class="topo-painel">
+                <h2>Almoço Escolar</h2>
+                <span class="tag-dia">Segunda</span>
+            </div>
+            
+            <!-- Painel de Alertas para Alérgicos -->
+            <div class="alerta-alergicos">
+                <strong>⚠️ Alerta para Alérgicos:</strong> Contém glúten devido ao tempero das carnes. Livre de lactose, ovos e castanhas.
+            </div>
+
+            <div class="grid-itens">
+                <div class="card-prato">
+                    <div class="imagem-prato" style="background-color: #2a6f97;">[ Almoço ]</div>
+                    <div class="info-prato">
+                        <h3>Iscas de Carne com Legumes</h3>
+                        <p>Arroz integral soltinho, feijão carioca, iscas de patinho aceboladas e seleta de legumes no vapor (cenoura e brócolis).</p>
+                        <div class="macro-container">
+                            <div class="macro-box"><span class="label">Calorias</span><span class="valor">480 kcal</span></div>
+                            <div class="macro-box"><span class="label">Proteínas</span><span class="valor">32g</span></div>
+                            <div class="macro-box"><span class="label">Carbos</span><span class="valor">55g</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO: TERÇA-FEIRA -->
+        <div class="painel-cardapio" id="menu-terca">
+            <div class="topo-painel">
+                <h2>Almoço Escolar</h2>
+                <span class="tag-dia">Terça</span>
+            </div>
+
+            <div class="alerta-alergicos">
+                <strong>⚠️ Alerta para Alérgicos:</strong> Livre de glúten e castanhas. O purê de batata doce contém derivados de leite (lactose).
+            </div>
+
+            <div class="grid-itens">
+                <div class="card-prato">
+                    <div class="imagem-prato" style="background-color: #468faf;">[ Almoço ]</div>
+                    <div class="info-prato">
+                        <h3>Frango Grelhado com Purê</h3>
+                        <p>Filé de frango grelhado com ervas finas, purê de batata doce cremoso, feijão preto e salada fresca de alface com tomate.</p>
+                        <div class="macro-container">
+                            <div class="macro-box"><span class="label">Calorias</span><span class="valor">450 kcal</span></div>
+                            <div class="macro-box"><span class="label">Proteínas</span><span class="valor">35g</span></div>
+                            <div class="macro-box"><span class="label">Carbos</span><span class="valor">48g</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO: QUARTA-FEIRA -->
+        <div class="painel-cardapio" id="menu-quarta">
+            <div class="topo-painel">
+                <h2>Almoço Escolar</h2>
+                <span class="tag-dia">Quarta</span>
+            </div>
+
+            <div class="alerta-alergicos">
+                <strong>⚠️ Alerta para Alérgicos:</strong> Contém glúten (massa de trigo) e derivados de leite (queijo branco ralado).
+            </div>
+
+            <div class="grid-itens">
+                <div class="card-prato">
+                    <div class="imagem-prato" style="background-color: #014f86;">[ Almoço ]</div>
+                    <div class="info-prato">
+                        <h3>Macarronada Integral</h3>
+                        <p>Espaguete integral ao molho bolonhesa caseiro (patinho moído) salpicado com queijo branco ralado e abobrinha refogada.</p>
+                        <div class="macro-container">
+                            <div class="macro-box"><span class="label">Calorias</span><span class="valor">510 kcal</span></div>
+                            <div class="macro-box"><span class="label">Proteínas</span><span class="valor">28g</span></div>
+                            <div class="macro-box"><span class="label">Carbos</span><span class="valor">62g</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO: QUINTA-FEIRA -->
+        <div class="painel-cardapio" id="menu-quinta">
+            <div class="topo-painel">
+                <h2>Almoço Escolar</h2>
+                <span class="tag-dia">Quinta</span>
+            </div>
+
+            <div class="alerta-alergicos">
+                <strong>⚠️ Alerta para Alérgicos:</strong> Contém peixe (tilápia). Livre de glúten, ovos e derivados de leite.
+            </div>
+
+            <div class="grid-itens">
+                <div class="card-prato">
+                    <div class="imagem-prato" style="background-color: #2c7da0;">[ Almoço ]</div>
+                    <div class="info-prato">
+                        <h3>Peixe Assado com Ervas</h3>
+                        <p>Filé de tilápia assado no forno, arroz cozido com brócolis picado, lentilha temperada e salada de acelga com cenoura ralada.</p>
+                        <div class="macro-container">
+                            <div class="macro-box"><span class="label">Calorias</span><span class="valor">420 kcal</span></div>
+                            <div class="macro-box"><span class="label">Proteínas</span><span class="valor">30g</span></div>
+                            <div class="macro-box"><span class="label">Carbos</span><span class="valor">44g</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO: SEXTA-FEIRA -->
+        <div class="painel-cardapio" id="menu-sexta">
+            <div class="topo-painel">
+                <h2>Almoço Escolar</h2>
+                <span class="tag-dia">Sexta</span>
+            </div>
+
+            <div class="alerta-alergicos">
+                <strong>⚠️ Alerta para Alérgicos:</strong> Contém derivados de leite (creme de leite leve no molho do strogonoff).
+            </div>
+
+            <div class="grid-itens">
+                <div class="card-prato">
+                    <div class="imagem-prato" style="background-color: #012a4a;">[ Almoço ]</div>
+                    <div class="info-prato">
+                        <h3>Strogonoff Light de Frango</h3>
+                        <p>Strogonoff de frango feito com creme de leite leve, arroz branco soltinho, feijão carioca e cubos de batata doce assados.</p>
+                        <div class="macro-container">
+                            <div class="macro-box"><span class="label">Calorias</span><span class="valor">530 kcal</span></div>
+                            <div class="macro-box"><span class="label">Proteínas</span><span class="valor">33g</span></div>
+                            <div class="macro-box"><span class="label">Carbos</span><span class="valor">58g</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
