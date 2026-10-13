@@ -1,0 +1,9 @@
+[
+  {
+    "id": 1,
+    "nome": "Administrador",
+    "email": "admin@escola.local",
+    "senha": "$2b$10$IzCBCtKkFSJOLa7T.HOQLesIlWVT5prS0fm9VgyKFTv4BED9qC7nu",
+    "role": "admin"
+  }
+]
