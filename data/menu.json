@@ -2,8 +2,8 @@
   {
     "id": 1,
     "dia": "Segunda",
-    "titulo": "Arroz feijão e batata ",
-    "descricao": "deu certo  ",
+    "titulo": "Lixo",
+    "descricao": "Arroz com goiabada",
     "calorias": "Muitas",
     "proteinas": "Nenhuma",
     "carboidratos": "Um pouco",
@@ -12,7 +12,7 @@
   {
     "id": 2,
     "dia": "Terça",
-    "titulo": "Deu certinho kkkk",
+    "titulo": "Lagostas",
     "descricao": "Filé de Lagostas grelhado com ervas finas, purê de batata doce cremoso, feijão preto e salada fresca.",
     "calorias": "450 kcal",
     "proteinas": "35g",
@@ -32,8 +32,8 @@
   {
     "id": 4,
     "dia": "Quinta",
-    "titulo": "Burrito",
-    "descricao": "Muito bom, eu te amo princesa ",
+    "titulo": "Peixe Assado com Ervas",
+    "descricao": "Filé de tilápia assado, arroz com brócolis, lentilha temperada e salada.",
     "calorias": "420 kcal",
     "proteinas": "30g",
     "carboidratos": "44g",
