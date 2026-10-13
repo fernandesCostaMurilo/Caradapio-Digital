@@ -1,190 +1,194 @@
-let menu = [];
+const estado = {
+  periodo: 'manha',
+  pratos: {
+    cafe: [],
+    almoco: []
+  },
+  tipoAtual: null
+};
 
+const listaCafe = document.getElementById('lista-cafe');
+const listaAlmoco = document.getElementById('lista-almoco');
+const modal = document.getElementById('modal-prato');
+const inputPrato = document.getElementById('input-prato');
 
-async function carregarMenu() {
+const opcoesCafeButtons = document.querySelectorAll('.opcao-item');
 
-    const resposta =
-        await fetch("/api/menu");
+function atualizarTextoPeriodo() {
+  const headers = document.querySelectorAll('.prato-header');
+  const headerCafe = headers[0];
+  const headerSegundo = headers[1];
+  const tituloCafe = document.querySelector('.cesta-header .mini-title');
 
-    menu =
-        await resposta.json();
+  if (estado.periodo === 'manha') {
+    headerCafe.innerHTML = '<i>☕</i> CAFÉ DA MANHÃ';
+    headerSegundo.innerHTML = '<i>🍽️</i> ALMOÇO';
+  } else {
+    headerCafe.innerHTML = '<i>☕</i> CAFÉ DA TARDE';
+    headerSegundo.innerHTML = '<i>🍽️</i> JANTA';
+  }
 
-    mostrarMenu();
+  if (tituloCafe) {
+    tituloCafe.textContent = 'SUGESTÕES RÁPIDAS';
+  }
 
+  const texto = document.querySelector('.card-periodo.noite small');
+  if (texto) {
+    texto.textContent = estado.periodo === 'manha' ? 'Café da manhã e Almoço' : 'Café da tarde e Janta';
+  }
 }
 
+// 1. ESCOLHER PERÍODO
+document.querySelectorAll('.card-periodo').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.card-periodo').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    estado.periodo = card.classList.contains('manha') ? 'manha' : 'noite';
+    atualizarTextoPeriodo();
+  });
+});
 
-function mostrarMenu() {
+// 2. ABRIR MODAL
+document.querySelectorAll('.btn-add').forEach(btn => {
+  btn.addEventListener('click', () => {
+    estado.tipoAtual = btn.dataset.tipo;
 
-    const container =
-        document.getElementById("cardapio");
+    if (estado.periodo === 'manha') {
+      document.getElementById('modal-titulo').innerText =
+        estado.tipoAtual === 'cafe' ? 'Adicionar Café da Manhã' : 'Adicionar Almoço';
+    } else {
+      document.getElementById('modal-titulo').innerText =
+        estado.tipoAtual === 'cafe' ? 'Adicionar Café da Tarde' : 'Adicionar Janta';
+    }
 
-    container.innerHTML = "";
+    modal.classList.remove('hidden');
+    inputPrato.value = '';
+    inputPrato.focus();
+  });
+});
 
-
-    menu.forEach((item, index) => {
-
-        const div =
-            document.createElement("div");
-
-        div.className = "dia";
-
-
-        div.innerHTML = `
-
-            <h2>${item.dia}</h2>
-
-            <label>
-                Prato
-            </label>
-
-            <input
-                id="titulo-${index}"
-                value="${item.titulo}"
-            >
-
-            <label>
-                Descrição
-            </label>
-
-            <textarea
-                id="descricao-${index}"
-            >${item.descricao}</textarea>
-
-            <label>
-                Calorias
-            </label>
-
-            <input
-                id="calorias-${index}"
-                value="${item.calorias}"
-            >
-
-            <label>
-                Proteínas
-            </label>
-
-            <input
-                id="proteinas-${index}"
-                value="${item.proteinas}"
-            >
-
-            <label>
-                Carboidratos
-            </label>
-
-            <input
-                id="carboidratos-${index}"
-                value="${item.carboidratos}"
-            >
-
-            <label>
-                Alerta
-            </label>
-
-            <textarea
-                id="alerta-${index}"
-            >${item.alerta}</textarea>
-
-            <button
-                class="salvar"
-                onclick="salvarDia(${index})"
-            >
-                Salvar ${item.dia}
-            </button>
-
-        `;
-
-        container.appendChild(div);
-
-    });
-
+function fecharModal() {
+  modal.classList.add('hidden');
+  estado.tipoAtual = null;
 }
 
+document.getElementById('btn-cancelar').addEventListener('click', fecharModal);
+modal.addEventListener('click', (e) => { if(e.target === modal) fecharModal() });
 
-async function salvarDia(index) {
-
-    menu[index].titulo =
-        document.getElementById(
-            `titulo-${index}`
-        ).value;
-
-
-    menu[index].descricao =
-        document.getElementById(
-            `descricao-${index}`
-        ).value;
-
-
-    menu[index].calorias =
-        document.getElementById(
-            `calorias-${index}`
-        ).value;
-
-
-    menu[index].proteinas =
-        document.getElementById(
-            `proteinas-${index}`
-        ).value;
-
-
-    menu[index].carboidratos =
-        document.getElementById(
-            `carboidratos-${index}`
-        ).value;
-
-
-    menu[index].alerta =
-        document.getElementById(
-            `alerta-${index}`
-        ).value;
-
-
-    const resposta =
-        await fetch("/api/admin/menu", {
-
-            method: "PUT",
-
-            headers: {
-                "Content-Type":
-                    "application/json"
-            },
-
-            body: JSON.stringify(menu)
-
-        });
-
-
-    const dados =
-        await resposta.json();
-
-
-    document.getElementById(
-        "mensagem"
-    ).textContent =
-        dados.mensagem;
-
+// 3. CONFIRMAR PRATO
+function adicionarPrato(nome) {
+  if (!nome.trim() ||!estado.tipoAtual) return;
+  estado.pratos[estado.tipoAtual].push(nome.trim());
+  render();
+  fecharModal();
 }
 
+document.getElementById('btn-confirmar').addEventListener('click', () => {
+  adicionarPrato(inputPrato.value);
+});
 
-document
-    .getElementById("logout")
-    .addEventListener(
-        "click",
-        async () => {
+inputPrato.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') adicionarPrato(inputPrato.value);
+});
 
-            await fetch(
-                "/api/logout",
-                {
-                    method: "POST"
-                }
-            );
+opcoesCafeButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const nome = button.dataset.nome;
+    const jaExiste = estado.pratos.cafe.includes(nome);
 
-            window.location.href =
-                "/login.html";
+    if (jaExiste) {
+      estado.pratos.cafe = estado.pratos.cafe.filter(prato => prato !== nome);
+      button.classList.remove('selected');
+    } else {
+      estado.pratos.cafe.push(nome);
+      button.classList.add('selected');
+    }
 
-        }
-    );
+    render();
+  });
+});
 
+// 4. SUGESTÕES RÁPIDAS
+document.querySelectorAll('.chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const nome = chip.innerText.replace(/.*\s/, '').trim() || chip.textContent.trim();
+    // Lógica inteligente: Arroz, Feijão etc vai para Almoço, mas se o usuário quiser café, ele usa o botão
+    // Vamos perguntar onde adicionar se for ambíguo, ou adicionar direto no almoço
+    const textoLimpo = chip.textContent.replace(/[^a-zA-ZÀ-ÿ\s]/g, '').trim();
 
-carregarMenu();
+    // Se já tem algo no café e nada no almoço, adiciona no almoço e vice-versa
+    // Simplificado: adiciona no almoço por padrão
+    estado.pratos.almoco.push(textoLimpo);
+    render();
+
+    chip.animate([{transform:'scale(1)'},{transform:'scale(0.9)'},{transform:'scale(1)'}], {duration:200});
+  });
+});
+
+// 5. RENDERIZAR LISTAS
+function render() {
+  renderLista('cafe', listaCafe);
+  renderLista('almoco', listaAlmoco);
+}
+
+function renderLista(tipo, container) {
+  const pratos = estado.pratos[tipo];
+  if (pratos.length === 0) {
+    container.innerHTML = 'Nenhum prato selecionado';
+    container.className = 'empty';
+    return;
+  }
+  container.className = 'lista-pratos';
+  container.innerHTML = pratos.map((nome, index) => `
+    <div class="prato-item">
+      <span>${nome}</span>
+      <button onclick="removerPrato('${tipo}', ${index})">x</button>
+    </div>
+  `).join('');
+}
+
+window.removerPrato = (tipo, index) => {
+  estado.pratos[tipo].splice(index, 1);
+  render();
+}
+
+// 6. SALVAR CARDÁPIO
+document.querySelector('.btn-salvar').addEventListener('click', () => {
+  const observacao = document.querySelector('.obs-wrapper input').value;
+
+  if (estado.pratos.cafe.length === 0 && estado.pratos.almoco.length === 0) {
+    alert('Adicione pelo menos um prato antes de salvar!');
+    return;
+  }
+
+  const cardapio = {
+    id: Date.now(),
+    data: new Date().toLocaleDateString('pt-BR'),
+    periodo: estado.periodo,
+    pratos: {...estado.pratos},
+    observacao
+  };
+
+  const salvos = JSON.parse(localStorage.getItem('cardapios') || '[]');
+  salvos.push(cardapio);
+  localStorage.setItem('cardapios', JSON.stringify(salvos));
+
+  // feedback visual
+  const btn = document.querySelector('.btn-salvar');
+  btn.innerText = '✓ CARDÁPIO SALVO!';
+  btn.style.background = '#2e7d32';
+
+  setTimeout(() => {
+    btn.innerHTML = '💾 SALVAR CARDÁPIO';
+    btn.style.background = '';
+    // limpa
+    estado.pratos.cafe = [];
+    estado.pratos.almoco = [];
+    document.querySelector('.obs-wrapper input').value = '';
+    render();
+  }, 1500);
+
+  console.log('Cardápio salvo:', cardapio);
+});
+
+render()

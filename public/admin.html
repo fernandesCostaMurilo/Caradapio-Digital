@@ -1,47 +1,140 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Painel Administrativo</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Cardápio</title>
+     <link rel="icon" type="image/png" href="logo.png.png">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="admin.css">
-
 </head>
 
 <body>
+    <!-- BARRA DE ACESSIBILIDADE -->
+<div id="barra-acess">
+  <button onclick="aumentarFonte()" title="Aumentar fonte">A+</button>
+  <button onclick="diminuirFonte()" title="Diminuir fonte">A-</button>
+  <button onclick="toggleContraste()" title="Alto contraste" id="btn-contraste">◐ Contraste</button>
+  <button onclick="toggleFonte()" title="Fonte para dislexia">Fonte acessível</button>
+</div>
 
+
+<script>
+let tamanhoFonte = 100;
+
+function aumentarFonte(){
+  tamanhoFonte += 10;
+  document.documentElement.style.fontSize = tamanhoFonte + '%';
+  localStorage.setItem('fonte', tamanhoFonte);
+}
+function diminuirFonte(){
+  if(tamanhoFonte > 70){
+    tamanhoFonte -= 10;
+    document.documentElement.style.fontSize = tamanhoFonte + '%';
+    localStorage.setItem('fonte', tamanhoFonte);
+  }
+}
+function toggleContraste(){
+  document.body.classList.toggle('modo-contraste');
+  const ativo = document.body.classList.contains('modo-contraste');
+  document.getElementById('btn-contraste').classList.toggle('ativo', ativo);
+  localStorage.setItem('contraste', ativo);
+}
+function toggleFonte(){
+  document.body.classList.toggle('fonte-acessivel');
+}
+
+// carregar preferências salvas
+(function(){
+  const f = localStorage.getItem('fonte');
+  if(f){ tamanhoFonte = parseInt(f); document.documentElement.style.fontSize = tamanhoFonte+'%'; }
+  if(localStorage.getItem('contraste')==='true'){
+    document.body.classList.add('modo-contraste');
+    document.getElementById('btn-contraste')?.classList.add('ativo');
+  }
+})();
+</script>
     <header>
-
-        <h1>
-            Painel do Cardápio
-        </h1>
-
-        <button id="logout">
-            Sair
-        </button>
-
+        <div class="logo">🍽️ CARDÁPIO DIGITAL</div>
+        <div style="display:flex;align-items:center;gap:14px">
+            <h1>Painel do Cardápio</h1>
+            <button id="logout">↪ Sair</button>
+        </div>
     </header>
 
-
     <main id="cardapio">
-
-        Carregando cardápio...
-
+        <div class="loading">Carregando cardápio...</div>
     </main>
 
     <p id="mensagem"></p>
 
-    <script src="admin.js" defer></script>
+    <script>
+        let menu = [];
+        async function carregarMenu() {
+            const resposta = await fetch("/api/menu");
+            menu = await resposta.json();
+            mostrarMenu();
+        }
+        function mostrarMenu() {
+            const container = document.getElementById("cardapio");
+            container.innerHTML = "";
+            menu.forEach((item, index) => {
+                const div = document.createElement("div");
+                div.className = "dia";
+                div.innerHTML = `
+                    <h2>${item.dia}</h2>
+                    <label>Prato</label>
+                    <input id="titulo-${index}" value="${item.titulo}">
+                    <label>Descrição</label>
+                    <textarea id="descricao-${index}">${item.descricao}</textarea>
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+                        <div><label>Calorias</label><input id="calorias-${index}" value="${item.calorias}"></div>
+                        <div><label>Proteínas</label><input id="proteinas-${index}" value="${item.proteinas}"></div>
+                        <div><label>Carboidratos</label><input id="carboidratos-${index}" value="${item.carboidratos}"></div>
+                    </div>
+                    <label>Alerta</label>
+                    <textarea id="alerta-${index}">${item.alerta}</textarea>
+                    <button class="salvar" onclick="salvarDia(${index})">💾 Salvar ${item.dia}</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+        async function salvarDia(index) {
+            menu[index].titulo = document.getElementById(`titulo-${index}`).value;
+            menu[index].descricao = document.getElementById(`descricao-${index}`).value;
+            menu[index].calorias = document.getElementById(`calorias-${index}`).value;
+            menu[index].proteinas = document.getElementById(`proteinas-${index}`).value;
+            menu[index].carboidratos = document.getElementById(`carboidratos-${index}`).value;
+            menu[index].alerta = document.getElementById(`alerta-${index}`).value;
 
+            const resposta = await fetch("/api/admin/menu", {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(menu)
+                });
+            const dados = await resposta.json();
+            const msgEl = document.getElementById("mensagem");
+            msgEl.textContent = dados.mensagem || "Salvo com sucesso!";
+            msgEl.classList.add("show");
+            setTimeout(()=>msgEl.classList.remove("show"), 3000);
+        }
+        document.getElementById("logout").addEventListener("click", async () => {
+            await fetch("/api/logout", { method: "POST" });
+            window.location.href = "/login.html";
+        });
+        carregarMenu();
+    </script>
+    <!-- VLibras -->
+<div vw class="enabled">
+  <div vw-access-button class="active"></div>
+  <div vw-plugin-wrapper>
+    <div class="vw-plugin-top-wrapper"></div>
+  </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+  new window.VLibras.Widget('https://vlibras.gov.br/app');
+</script>
 </body>
 
 </html>
